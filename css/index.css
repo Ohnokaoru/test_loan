@@ -1,0 +1,53 @@
+#container {
+    text-align: center;
+}
+
+body {
+    background-color: rgb(248, 221, 141);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+form {
+    background-color: rgb(235, 219, 198);
+    width: 300px;
+    margin: auto;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    text-align: center;
+    font-size: 18px;
+    border: 2px solid rgb(244, 245, 214);
+
+
+}
+
+button {
+    width: 80px;
+    height: 25px;
+    border: 0px;
+    border-radius: 6px;
+    background-color: rgb(233, 164, 115);
+    margin: 0 5px;
+    font-size: 15px;
+}
+
+#repayment-form {
+    width: 300px;
+    background-color: rgb(210, 131, 131);
+    border-radius: 8px;
+    padding: 5px;
+    text-align: center;
+    margin: 5px auto;
+}
+
+#info {
+    display: inline-block;
+    text-align: left;
+    margin: auto;
+}
+
+
+
+
+#reset {
+    background-color: rgb(238, 67, 67);
+}
