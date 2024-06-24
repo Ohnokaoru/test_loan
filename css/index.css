@@ -34,9 +34,9 @@ button {
     width: 300px;
     background-color: rgb(210, 131, 131);
     border-radius: 8px;
-    padding: 5px;
+    padding: 4px;
     text-align: center;
-    margin: 5px auto;
+    margin: 2px auto;
 }
 
 #info {
@@ -50,4 +50,24 @@ button {
 
 #reset {
     background-color: rgb(238, 67, 67);
+}
+
+select,
+option {
+    text-align: center;
+    width: 176px;
+
+}
+
+input {
+    text-align: center;
+}
+
+#error-form {
+    padding: 5px;
+    margin: 5px auto;
+    display: block;
+    background-color: white;
+    color: red;
+    border-radius: 5px;
 }
