@@ -6,6 +6,9 @@ const repayment2El = document.querySelector("#repayment2");
 const feeEl = document.querySelector("#fee");
 const error_formEl = document.querySelector("#error-form")
 const calcEl = document.querySelector("#calc");
+const resetEl = document.querySelector("#reset");
+
+const resultEl = document.querySelector("#result");
 
 console.log(amountEl, yearsEl, rateEl, repayment1El, repayment2El, feeEl, calcEl);
 
@@ -22,16 +25,37 @@ function calcloan() {
     // if (feeEl.checked) {
     //     fee = 5000
     // }
-    if (amount || rate < 0) {
 
-        console.log("數值輸入錯誤");
-        error_formEl.innerHTML = `<b>數值輸入錯誤</b>`
-
-    }
     // 取得本金攤還或本息攤還
     let rule = repayment1El.checked ? 1 : 2;
 
-    let interest = amount * years * rate;
-    let totalAmount = amount + interest + fee;
-    console.log(amount, years, rate, fee, rule, interest, totalAmount);
+    let totalInterest = amount * years * rate;
+    let totalAmount = amount + totalInterest + fee;
+    document.querySelector(".totalAmount").innerText = totalAmount + "元" + (fee == 0 ? "" : "(含手續費)");
+    document.querySelector(".totalInterest").innerText = totalInterest + "元";
+
+
+    if (amount < 0 || rate < 0) {
+        console.log("數值輸入錯誤");
+        error_formEl.innerHTML = `<b>數值輸入錯誤</b>`;
+        error_formEl.style.display = "block";
+        resultEl.style.display = "none";
+    } else {
+        error_formEl.style.display = "none";
+        // 預設框架未跳出，
+        resultEl.style.display = "none";
+        // 藉由含式，若有再次輸入，則等100毫秒跳出
+        setTimeout(function () {
+            resultEl.style.display = "block";
+        }, 100);
+
+    }
+    console.log(amount, years, rate, fee, rule, totalInterest, totalAmount);
+}
+
+resetEl.addEventListener("click", resetButton);
+
+function resetButton() {
+    resultEl.style.display = "none";
+
 }
