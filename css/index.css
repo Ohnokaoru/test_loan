@@ -45,9 +45,6 @@ button {
     margin: auto;
 }
 
-
-
-
 #reset {
     background-color: rgb(238, 67, 67);
 }
@@ -84,6 +81,5 @@ input {
     border: 1px solid rgb(251, 243, 243);
     /* 預設未跳出 */
     display: none;
-
 
 }
