@@ -7,10 +7,12 @@ const feeEl = document.querySelector("#fee");
 const error_formEl = document.querySelector("#error-form")
 const calcEl = document.querySelector("#calc");
 const resetEl = document.querySelector("#reset");
+const tableEl = document.querySelector("#table");
+const tbodyEl = document.querySelector("#table tbody");
 
 const resultEl = document.querySelector("#result");
 
-console.log(amountEl, yearsEl, rateEl, repayment1El, repayment2El, feeEl, calcEl);
+console.log(amountEl, yearsEl, rateEl, repayment1El, repayment2El, feeEl, calcEl, tableEl);
 
 // element監聽器 ，calcEl.addEventListener("監聽的東西",function);
 calcEl.addEventListener("click", calcloan);
@@ -18,8 +20,9 @@ calcEl.addEventListener("click", calcloan);
 function calcloan() {
     let amount = amountEl.value * 10000;
     let years = yearsEl.value;
-    let rate = rateEl.value / 100;
+    let rate = rateEl.value;
     let fee = feeEl.checked ? 5000 : 0;
+
 
     // let fee = 0;
     // if (feeEl.checked) {
@@ -29,8 +32,19 @@ function calcloan() {
     // 取得本金攤還或本息攤還
     let rule = repayment1El.checked ? 1 : 2;
 
-    let totalInterest = amount * years * rate;
+    let result;
+    if (rule == 1) {
+        result = rule1(amount, years, rate);
+        console.log(result);
+
+    } else {
+        alert("功能製作中...");
+        return;
+    }
+    // 總付款金額
+    let totalInterest = result[1];
     let totalAmount = amount + totalInterest + fee;
+
     document.querySelector(".totalAmount").innerText = totalAmount + "元" + (fee == 0 ? "" : "(含手續費)");
     document.querySelector(".totalInterest").innerText = totalInterest + "元";
 
@@ -49,13 +63,70 @@ function calcloan() {
             resultEl.style.display = "block";
         }, 100);
 
+        tableEl.style.display = "block";
+
     }
-    console.log(amount, years, rate, fee, rule, totalInterest, totalAmount);
+    // console.log(amount, years, rate, fee, rule);
+    drawTable(result[0]);
 }
+
+
+function drawTable(datas) {
+    let tableStr = "";
+    for (let i = 0; i < datas.length; i++) {
+        tableStr += "<tr>";
+        for (let j = 0; j < datas[i].length; j++) {
+            tableStr += `<td>${datas[i][j]}</td>`;
+            // console.log(datas[i][j]);
+
+        }
+        tableStr += "</tr>";
+    }
+    tbodyEl.innerHTML = tableStr;
+    // let tableStr = "<ul>";
+    // for (let i = 0; i < datas.length; i++) {
+    //     console.log(datas[i].join(","));
+    //     tableStr += `<li>${datas[i].join(",")}</li>`;
+    // }
+    // tableStr += "</ul>;"
+    // console.log(tableStr);
+
+}
+
+
+
+
 
 resetEl.addEventListener("click", resetButton);
 
 function resetButton() {
     resultEl.style.display = "none";
+    tableEl.style.display = "none";
 
 }
+
+function rule1(total_amount, years, rate) {
+    let amount = total_amount;
+    let month_rate = rate / 100 / 12;
+    let period = years * 12;
+    let month_pay = parseInt(amount / period);
+
+    let datas = [];
+    let totalInterest = 0
+    for (let i = 0; i < period; i++) {
+        interest = Math.round(amount * month_rate);
+        amount -= month_pay;
+        totalInterest += interest;
+
+
+        if (i == period - 1) {
+            datas.push([i + 1, month_pay + amount, interest, month_pay + interest + amount, 0]);
+
+        } else {
+            datas.push([i + 1, month_pay, interest, month_pay + interest, amount]);
+        }
+    }
+    // console.log(datas);
+    return [datas, totalInterest];
+}
+

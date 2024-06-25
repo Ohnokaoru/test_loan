@@ -83,3 +83,29 @@ input {
     display: none;
 
 }
+
+table {
+
+    width: 80%;
+    margin: 5px auto;
+    padding: 5px;
+    border: 1px solid black;
+    /* 關閉線框 */
+    border-collapse: collapse;
+    background-color: rgb(230, 210, 185);
+}
+
+thead th {
+    background-color: rgb(229, 178, 141);
+    border: 2px solid white;
+    font-size: 18px;
+}
+
+td {
+    border: 1px solid rgb(248, 245, 245);
+
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgb(218, 179, 165);
+}
