@@ -38,8 +38,8 @@ function calcloan() {
         console.log(result);
 
     } else {
-        alert("功能製作中...");
-        return;
+        result = rule2(amount, years, rate);
+        console.log(result);
     }
     // 總付款金額
     let totalInterest = result[1];
@@ -63,7 +63,10 @@ function calcloan() {
             resultEl.style.display = "block";
         }, 100);
 
-        tableEl.style.display = "block";
+        setTimeout(function () {
+            tableEl.style.display = "block";
+        }, 100);
+
 
     }
     // console.log(amount, years, rate, fee, rule);
@@ -102,6 +105,12 @@ resetEl.addEventListener("click", resetButton);
 function resetButton() {
     resultEl.style.display = "none";
     tableEl.style.display = "none";
+    amountEl.value = 10;
+    yearsEl.value = 5;
+    rateEl.value = 2;
+    feeEl.checked = true;
+    repayment1El.checked = true;
+    repayment2El.checked = false;
 
 }
 
@@ -130,3 +139,40 @@ function rule1(total_amount, years, rate) {
     return [datas, totalInterest];
 }
 
+
+function rule2(total_amount, years, rate) {
+
+
+    let amount = total_amount;
+    let month_rate = rate / 100 / 12;
+    let period = years * 12;
+
+    let month_pay = amount * month_rate * (Math.pow((1 + month_rate), period)) / (Math.pow((1 + month_rate), period) - 1);
+    month_pay = Math.ceil(month_pay);
+
+    datas = [];
+    totalInterest = 0;
+
+    for (let i = 0; i < period; i++) {
+        pay_month_interest = amount * month_rate;
+        pay_month_interest = Math.round(pay_month_interest);
+        amount -= (month_pay - pay_month_interest);
+        totalInterest += pay_month_interest;
+
+
+        if (i != period - 1) {
+
+            datas.push([i + 1, month_pay - pay_month_interest, pay_month_interest, month_pay, amount])
+        } else {
+
+            datas.push([i + 1, amount + month_pay - pay_month_interest, pay_month_interest, amount + month_pay, 0])
+        }
+    }
+
+    // 總支出利息
+    console.log(totalInterest);
+
+    // 總還款金額
+    console.log(totalInterest + total_amount);
+    return [datas, totalInterest];
+}
